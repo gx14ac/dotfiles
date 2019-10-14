@@ -9,3 +9,4 @@
 (load "~/.emacs.rc/paredit-rc.el")
 (load "~/.emacs.rc/emacs-lisp-rc.el")
 (load "~/.emacs.rc/haskell-mode-rc.el")
+(load "~/.emacs.rc/whitespace-mode-rc.el")
