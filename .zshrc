@@ -89,7 +89,6 @@ alias git-remove-local-branch='git branch --merged | grep -v 'master' | grep -v 
 alias hb='hub browse'
 alias hi='hub issue'
 alias tf='terraform'
-alias ls="ls -l -a"
 alias ll="ls -al"
 alias ss="screen -S"
 alias sr="screen -r"
