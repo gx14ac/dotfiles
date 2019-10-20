@@ -1,5 +1,3 @@
-;;; configure key-bind files.
-
 (require 'ansi-color)
 
 (global-set-key (kbd "C-c p") 'find-file-at-point)
@@ -9,70 +7,72 @@
               make-backup-files nil
               tab-width 4
               indent-tabs-mode nil
-              compliation-scroll-output t
-              default-input-method "English"
-              visible-bell nil)
+              compilation-scroll-output t
+              default-input-method "russian-computer"
+              visible-bell (equal system-type 'windows-nt))
 
-(defun rc/colorize-compliation-buffer()
-    (toggle-read-only)
-    (ansi-color-apply-on-region compliation-filter-start (point))
-    (toggle-read-only))
-(add-hook 'compliation-filter-hook 'rc/colorize-compliation-buffer)
+(defun rc/colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'rc/colorize-compilation-buffer)
 
-(defun rc/buffer-file-name()
-    (if (equal major-mode 'dired-mode)
-        default-directory
+(defun rc/buffer-file-name ()
+  (if (equal major-mode 'dired-mode)
+      default-directory
     (buffer-file-name)))
 
 (defun rc/parent-directory (path)
-    (file-name-directory (directory-file-name path)))
+  (file-name-directory (directory-file-name path)))
 
 (defun rc/root-anchor (path anchor)
-    (cond
-        ((string = anchor "") nil)
-        ((file-exists-p (concat (file-name-as-directory path) anchor)) path)
-        ((string-equal path "/") nil)
-        (t (rc/root-anchor (rc/parent-directory path) anchor))))
+  (cond
+   ((string= anchor "") nil)
+   ((file-exists-p (concat (file-name-as-directory path) anchor)) path)
+   ((string-equal path "/") nil)
+   (t (rc/root-anchor (rc/parent-directory path) anchor))))
 
 (defun rc/clipboard-org-mode-file-link (anchor)
-    (interactive "sRoot anchor: ")
-    (let* ((root-dir (rc/root-anchor default-directory anchor))
-           (org-mode-file-link (format "file:%s::%d"
-                                       (if root-dir
-                                           (file-relative-name (rc/buffer-file-name) root-dir)
-                                          (rc/buffer-file-name))
-                                        (line-number-at-pos))))  
+  (interactive "sRoot anchor: ")
+  (let* ((root-dir (rc/root-anchor default-directory anchor))
+         (org-mode-file-link (format "file:%s::%d"
+                                     (if root-dir
+                                         (file-relative-name (rc/buffer-file-name) root-dir)
+                                       (rc/buffer-file-name))
+                                     (line-number-at-pos))))
     (kill-new org-mode-file-link)
     (message org-mode-file-link)))
-    
-(defun rc/put-buffer-name-on-clipboard()
-    "Put the current buffer name on the clipboard"
-    (interactive)
-    (let ((filename (rc/buffer-file-name)))
-        (when filename
-            (kill-new filename)
-            (message filename))))
 
-(defun rc/kill-autoloads-buffers()
-    (interactive)
-    (dolist (buffer (buffer-list))
-        (let ((name (buffer-name buffer)))
-            (when (string-match-p "-autoloads.el", name)
-                (kill-buffer buffer)
-                (message "Killed autoloads buffer %s" name)))))
+(defun rc/put-file-name-on-clipboard ()
+  "Put the current file name on the clipboard"
+  (interactive)
+  (let ((filename (rc/buffer-file-name)))
+    (when filename
+      (kill-new filename)
+      (message filename))))
 
-(defun rc/start-pythn-simple-http-server()
-    (interactive)
-    (shell-command "python -m SimpleHTTPServer 3001 &"
-                   "*Simple Python HTTP Server*"))
-(global-set-key (kbd "C-x p s") 'rc/start-pythn-simple-http-server)
+(defun rc/put-buffer-name-on-clipboard ()
+  "Put the current buffer name on the clipboard"
+  (interactive)
+  (kill-new (buffer-name))
+  (message (buffer-name)))
+
+(defun rc/kill-autoloads-buffers ()
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (let ((name (buffer-name buffer)))
+      (when (string-match-p "-autoloads.el" name)
+        (kill-buffer buffer)
+        (message "Killed autoloads buffer %s" name)))))
+
+(defun rc/start-python-simple-http-server ()
+  (interactive)
+  (shell-command "python -m SimpleHTTPServer 3001 &"
+                 "*Simple Python HTTP Server*"))
+
+(global-set-key (kbd "C-x p s") 'rc/start-python-simple-http-server)
 
 (defun bf-pretty-print-xml-region (begin end)
-  "Pretty format XML markup in region. You need to have nxml-mode
-http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
-this.  The function inserts linebreaks to separate tags that have
-nothing but whitespace between them.  It then indents the markup
-by using nxml's indentation rules."
   (interactive "r")
   (save-excursion
     (nxml-mode)
@@ -82,10 +82,7 @@ by using nxml's indentation rules."
     (indent-region begin end))
   (message "Ah, much better!"))
 
-;;; Stolen from http://ergoemacs.org/emacs/emacs_unfill-paragraph.html
 (defun rc/unfill-paragraph ()
-  "Replace newline chars in current paragraph by single spaces.
-This command does the inverse of `fill-paragraph'."
   (interactive)
   (let ((fill-column 90002000)) ; 90002000 is just random. you can use `most-positive-fixnum'
     (fill-paragraph nil)))
