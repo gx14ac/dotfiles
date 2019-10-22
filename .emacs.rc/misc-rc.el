@@ -8,8 +8,7 @@
               tab-width 4
               indent-tabs-mode nil
               compilation-scroll-output t
-              default-input-method "russian-computer"
-              visible-bell (equal system-type 'windows-nt))
+              visible-bell (equal system-type 'ignore))
 
 (defun rc/colorize-compilation-buffer ()
   (toggle-read-only)
