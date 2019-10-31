@@ -10,8 +10,7 @@ eval "$(direnv hook zsh)"
 # GoPath
 export GO111MODULE=on
 export GOPATH=$HOME/go
-export GOROOT=/usr/lib/go-1.11
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=$PATH:$GOPATH/bin
 
 #rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
