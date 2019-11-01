@@ -9,8 +9,9 @@ eval "$(direnv hook zsh)"
 
 # GoPath
 export GO111MODULE=on
+export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # peco
 
@@ -35,7 +36,7 @@ RPROMPT="%1(v|%F{green}%1v%f|)"
 
 # zsh
 PROMPT=">> "
-PROMPT="%F{yellow}[snt]%f >> "
+PROMPT="%F{red}[flekystyley]%f >> "
 RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
 export LSCOLORS=cxfxcxdxbxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
