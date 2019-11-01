@@ -1,6 +1,9 @@
 # LANGUAGE
 export LANG=en_US
 
+# tmux
+[[ -z "$TMUX" && ! -z "$PS1" ]] && tmux
+
 # Neofetch
 neofetch
 
@@ -36,7 +39,7 @@ RPROMPT="%1(v|%F{green}%1v%f|)"
 
 # zsh
 PROMPT=">> "
-PROMPT="%F{red}[flekystyley]%f >> "
+PROMPT="%F{yellow}[flekystyley]%f >> "
 RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
 export LSCOLORS=cxfxcxdxbxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
@@ -83,6 +86,7 @@ alias hb='hub browse'
 alias hi='hub issue'
 alias tf='terraform'
 alias ll="ls -al"
+alias ls="ls -a"
 alias ss="screen -S"
 alias sr="screen -r"
 alias sls="screen -ls"
