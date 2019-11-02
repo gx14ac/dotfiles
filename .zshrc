@@ -16,8 +16,6 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-# peco
-
 # ghq
 function peco-src() {
     local selected_dir=$(ghq list | peco --query "$LBUFFER")
@@ -31,11 +29,6 @@ zle -N peco-src
 stty -ixon
 bindkey '^g' peco-src
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' formats '[%b]'
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
-RPROMPT="%1(v|%F{green}%1v%f|)"
 
 # zsh
 PROMPT=">> "
@@ -77,7 +70,7 @@ setopt share_history
 setopt hist_ignore_all_dups
 function git(){hub "$@"}
 
-# alias.
+# alias
 alias gs='git status'
 alias gco='git commit'
 alias gcm='git commit -m'
