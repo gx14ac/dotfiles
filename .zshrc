@@ -48,6 +48,9 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
 
+autoload -Uz colors
+colors
+
 # git completion
 fpath=(~/.zsh/completion $fpath)
 autoload -U compinit
@@ -80,7 +83,7 @@ alias hb='hub browse'
 alias hi='hub issue'
 alias tf='terraform'
 alias ll="ls -al"
-alias ls="ls -a"
+alias ls='ls --color=auto'
 alias ss="screen -S"
 alias sr="screen -r"
 alias sls="screen -ls"
