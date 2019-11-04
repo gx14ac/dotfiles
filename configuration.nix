@@ -47,7 +47,7 @@
   environment.systemPackages = with pkgs; [
 	wget 
 	curl
-    git
+    	git
    	zsh 
    	gcc 
    	gnumake 
@@ -95,7 +95,7 @@
 
   services.xserver = {
     enable          = true;
-    layout 	        = "us";
+    layout 	    = "us";
     xkbOptions      = "ctrl:nocaps";
     libinput.enable = true;
 
@@ -126,8 +126,8 @@
     uid 	     = 1000;
     shell 	     = pkgs.zsh;
     home 	     = "/home/flekystyley";
-    createHome 	 = true;
-    extraGroups  = [ "wheel" "networkmanager" "tty" "dialout" "zsh" "plugdev" ];
+    createHome 	     = true;
+    extraGroups      = [ "wheel" "networkmanager" "tty" "dialout" "zsh" "plugdev" ];
   }; 
   
   # hardware.openrazer.enable = true;
