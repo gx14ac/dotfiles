@@ -122,7 +122,7 @@
   };
 
  users.users.flekystyley = {
-    isNormalUser = true;
+    isNormalUser     = true;
     uid 	     = 1000;
     shell 	     = pkgs.zsh;
     home 	     = "/home/flekystyley";
