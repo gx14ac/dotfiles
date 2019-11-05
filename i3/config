@@ -2,6 +2,10 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# autostart programs.
+exec --no-startup-id feh --bg-fill ~/.config/i3/wall-paper.jpg
+exec --no-startup-id ibus-daemon
+
 # basic window
 for_window [class="^.*"] border pixel 2
 gaps inner 15
