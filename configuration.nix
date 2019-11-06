@@ -1,4 +1,4 @@
-{ config, pkgs, callPackage, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
@@ -129,8 +129,6 @@
     createHome 	     = true;
     extraGroups      = [ "wheel" "networkmanager" "tty" "dialout" "zsh" "plugdev" ];
   }; 
-  
-  # hardware.openrazer.enable = true;
   
   system.stateVersion = "19.03";
 }
