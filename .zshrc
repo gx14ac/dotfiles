@@ -72,15 +72,15 @@ HISTTIMEFORMAT='%y/%m/%d %H:%M:%S ';
 HISTIGNORE=ls:la:history
 setopt share_history
 setopt hist_ignore_all_dups
-# function git(){hub "$@"}
+function git(){hub "$@"}
 
 # alias
 alias gs='git status'
 alias gco='git commit'
 alias gcm='git commit -m'
 alias git-remove-local-branch='git branch --merged | grep -v 'master' | grep -v 'develop''
-#alias hb='hub browse'
-#alias hi='hub issue'
+alias hb='hub browse'
+alias hi='hub issue'
 alias tf='terraform'
 alias ll="ls -al"
 alias ls='ls --color=auto'
