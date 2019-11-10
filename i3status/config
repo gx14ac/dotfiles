@@ -1,3 +1,5 @@
+# i3status configuration file.
+
 general {
         colors = true
         interval = 5
