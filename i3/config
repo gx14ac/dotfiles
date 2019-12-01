@@ -31,7 +31,10 @@ floating_modifier $mod
 bindsym $mod+Return exec terminator
 
 # start ranger
-bindsym $mod+Shift+Return exec urxvt -e ranger -r ~/.config/ranger
+bindsym $mod+Shift+Return exec ranger
+
+# start ss
+bindsys $mod+Shift+s exec ~/Scripts/screenshot.sh -s
 
 # kill focused window
 bindsym $mod+Shift+q kill
