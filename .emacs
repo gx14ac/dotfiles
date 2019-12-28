@@ -35,6 +35,8 @@
 (load "~/.emacs.rc/latex-mode-rc.el")
 (load "~/.emacs.rc/agda2-mode-rc.el")
 (load "~/.emacs.rc/move-text-rc.el")
+(load "~/.emacs.rc/mozc-rc.el")
+(load "~/.emacs.rc/beep-rc.el")
 
 (add-to-list 'auto-mode-alist '("\\.ebi\\'" . lisp-mode))
 
