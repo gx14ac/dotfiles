@@ -1,4 +1,3 @@
-;;; configuration magit
 (rc/require 'cl-lib)
 (rc/require 'magit)
 

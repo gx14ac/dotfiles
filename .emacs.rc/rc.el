@@ -63,4 +63,3 @@
 (defun rc/remove-unused-packages ()
   (interactive)
   (message "Unused packages: %s" (rc/unused-packages)))
-
