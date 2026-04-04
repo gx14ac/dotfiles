@@ -125,12 +125,27 @@ require'nvim-treesitter.configs'.setup {
 --------------------------------------------------------------------
 require("conform").setup({
   formatters_by_ft = {
+    c = { "clang_format" },
     cpp = { "clang_format" },
   },
-
   format_on_save = {
-    lsp_fallback = true,
+    lsp_format = "never",
   },
+})
+
+--------------------------------------------------------------------
+-- llama-vim (C only, via Ollama)
+--------------------------------------------------------------------
+vim.g.llama_config = {
+  endpoint_fim = "http://127.0.0.1:11434/api/generate",
+  auto_fim = false,
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "c",
+  callback = function()
+    vim.g.llama_config = vim.tbl_extend("force", vim.g.llama_config, { auto_fim = true })
+  end,
 })
 
 --------------------------------------------------------------------
@@ -187,6 +202,7 @@ local on_attach = function(client, bufnr)
 end
 
 nvim_lsp["gopls"].setup { on_attach = on_attach }
+nvim_lsp["clangd"].setup { on_attach = on_attach }
 nvim_lsp["zls"].setup {
   on_attach = on_attach,
   settings = {
@@ -222,3 +238,28 @@ nvim_lsp["zls"].setup {
     }
   }
 }
+
+--------------------------------------------------------------------
+-- nvim-cmp (completion engine)
+--------------------------------------------------------------------
+local cmp = require('cmp')
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  }, {
+    { name = 'buffer' },
+  }),
+})
