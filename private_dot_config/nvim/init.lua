@@ -156,11 +156,10 @@ require('gitsigns').setup()
 --------------------------------------------------------------------
 -- LSP Configuration
 --------------------------------------------------------------------
-local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local opts = { noremap=true, silent=true }
-  
+
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -201,9 +200,25 @@ local on_attach = function(client, bufnr)
   end
 end
 
-nvim_lsp["gopls"].setup { on_attach = on_attach }
-nvim_lsp["clangd"].setup { on_attach = on_attach }
-nvim_lsp["zls"].setup {
+-- Configure LSP servers using vim.lsp.config (Neovim 0.11+)
+vim.lsp.config.gopls = {
+  cmd = { "gopls" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_markers = { "go.work", "go.mod", ".git" },
+  on_attach = on_attach,
+}
+
+vim.lsp.config.clangd = {
+  cmd = { "clangd" },
+  filetypes = { "c", "cpp", "objc", "objcpp" },
+  root_markers = { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" },
+  on_attach = on_attach,
+}
+
+vim.lsp.config.zls = {
+  cmd = { "zls" },
+  filetypes = { "zig", "zir" },
+  root_markers = { "zls.json", "build.zig", ".git" },
   on_attach = on_attach,
   settings = {
     zls = {
@@ -238,6 +253,9 @@ nvim_lsp["zls"].setup {
     }
   }
 }
+
+-- Enable LSP servers
+vim.lsp.enable({ "gopls", "clangd", "zls" })
 
 --------------------------------------------------------------------
 -- nvim-cmp (completion engine)
