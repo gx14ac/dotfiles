@@ -1,2 +1,3 @@
 .Xresources
 .config/kitty/kitty.conf
+.config/ghostty/config

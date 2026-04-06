@@ -281,3 +281,19 @@ cmp.setup({
     { name = 'buffer' },
   }),
 })
+
+--------------------------------------------------------------------
+-- Markdown settings
+--------------------------------------------------------------------
+-- vim-markdown folding
+vim.g.vim_markdown_folding_disabled = 0  -- Enable folding
+vim.g.vim_markdown_folding_level = 1     -- Default fold level
+
+-- render-markdown.nvim
+require('render-markdown').setup({
+  -- Default settings work well
+})
+
+-- Optional: Add keybindings for render-markdown
+vim.keymap.set('n', '<leader>mt', '<cmd>RenderMarkdown toggle<cr>', { desc = 'Toggle markdown rendering' })
+vim.keymap.set('n', '<leader>mp', '<cmd>RenderMarkdown preview<cr>', { desc = 'Preview markdown' })
