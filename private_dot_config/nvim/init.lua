@@ -9,65 +9,18 @@ vim.opt.termguicolors = true  -- Enable 24-bit RGB colors
 vim.cmd('syntax enable')
 
 --------------------------------------------------------------------
--- Catppuccin Theme (Treesitter supported)
+-- GitHub Theme (Treesitter supported)
 --------------------------------------------------------------------
-require("catppuccin").setup({
-  flavour = "macchiato", -- latte, frappe, macchiato, mocha
-  background = {
-    light = "latte",
-    dark = "mocha",
-  },
-  transparent_background = false,
-  show_end_of_buffer = false,
-  term_colors = true,
-  dim_inactive = {
-    enabled = false,
-    shade = "dark",
-    percentage = 0.15,
-  },
-  no_italic = false,
-  no_bold = false,
-  no_underline = false,
-  styles = {
-    comments = { "italic" },
-    conditionals = { "italic" },
-    loops = {},
-    functions = {},
-    keywords = {},
-    strings = {},
-    variables = {},
-    numbers = {},
-    booleans = {},
-    properties = {},
-    types = {},
-    operators = {},
-  },
-  integrations = {
-    cmp = true,
-    gitsigns = true,
-    nvimtree = true,
-    treesitter = true,
-    telescope = {
-      enabled = true,
-    },
-    native_lsp = {
-      enabled = true,
-      virtual_text = {
-        errors = { "italic" },
-        hints = { "italic" },
-        warnings = { "italic" },
-        information = { "italic" },
-      },
-      underlines = {
-        errors = { "underline" },
-        hints = { "underline" },
-        warnings = { "underline" },
-        information = { "underline" },
-      },
-    },
-  },
+require('github-theme').setup({
+  options = {
+    theme_style = "dark_default",  -- dark_default, dark, dark_dimmed, dark_high_contrast, dark_colorblind
+    transparent = false,
+    terminal_colors = true,
+    dim_inactive = false,
+    module_default = true,
+  }
 })
-vim.cmd.colorscheme "catppuccin"
+vim.cmd('colorscheme github_dark_default')
 
 --------------------------------------------------------------------
 -- Treesitter
@@ -127,9 +80,11 @@ require("conform").setup({
   formatters_by_ft = {
     c = { "clang_format" },
     cpp = { "clang_format" },
+    go = { "gofmt", "goimports" },  -- Add Go formatters
   },
   format_on_save = {
-    lsp_format = "never",
+    lsp_format = "fallback",  -- Use LSP if no formatter configured
+    timeout_ms = 500,
   },
 })
 
