@@ -270,6 +270,7 @@ vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = t
 vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true, desc = 'Live grep' })
 vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true, silent = true, desc = 'Find buffers' })
 vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true, silent = true, desc = 'Help tags' })
+vim.keymap.set('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<cr>', { noremap = true, silent = true, desc = 'Search in current buffer' })
 
 --------------------------------------------------------------------
 -- Disable old vim-misc Go formatting (prevents formatting_sync error)
