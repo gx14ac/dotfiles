@@ -1,6 +1,9 @@
 --------------------------------------------------------------------
 -- Basic Settings
 --------------------------------------------------------------------
+-- Set leader key to space (must be set before any leader keymaps)
+vim.g.mapleader = " "
+
 vim.g.vim_home_path = "~/.vim"
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -252,3 +255,29 @@ require('render-markdown').setup({
 -- Optional: Add keybindings for render-markdown
 vim.keymap.set('n', '<leader>mt', '<cmd>RenderMarkdown toggle<cr>', { desc = 'Toggle markdown rendering' })
 vim.keymap.set('n', '<leader>mp', '<cmd>RenderMarkdown preview<cr>', { desc = 'Preview markdown' })
+
+--------------------------------------------------------------------
+-- Telescope Configuration
+--------------------------------------------------------------------
+require('telescope').setup{
+  defaults = {
+    file_ignore_patterns = { "node_modules", ".git/" },
+  }
+}
+
+-- Telescope keymaps
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true, silent = true, desc = 'Find files' })
+vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true, desc = 'Live grep' })
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true, silent = true, desc = 'Find buffers' })
+vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true, silent = true, desc = 'Help tags' })
+
+--------------------------------------------------------------------
+-- Disable old vim-misc Go formatting (prevents formatting_sync error)
+--------------------------------------------------------------------
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    -- Clear any old BufWritePre autocmds that might use old LSP API
+    vim.api.nvim_clear_autocmds({ event = "BufWritePre", pattern = "*.go", group = vim.api.nvim_create_augroup("GoFormat", { clear = true }) })
+  end,
+})
