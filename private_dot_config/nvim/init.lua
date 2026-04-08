@@ -275,10 +275,19 @@ vim.keymap.set('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<cr>',
 --------------------------------------------------------------------
 -- Disable old vim-misc Go formatting (prevents formatting_sync error)
 --------------------------------------------------------------------
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "go",
+-- Clear ALL BufWritePre autocmds for Go files on startup
+vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
-    -- Clear any old BufWritePre autocmds that might use old LSP API
-    vim.api.nvim_clear_autocmds({ event = "BufWritePre", pattern = "*.go", group = vim.api.nvim_create_augroup("GoFormat", { clear = true }) })
+    -- Wait a bit for all plugins to load
+    vim.defer_fn(function()
+      -- Get all autocmds for BufWritePre *.go
+      local autocmds = vim.api.nvim_get_autocmds({ event = "BufWritePre", pattern = "*.go" })
+      for _, autocmd in ipairs(autocmds) do
+        -- Only delete autocmds that contain 'formatting_sync' in their command
+        if autocmd.command and autocmd.command:match("formatting_sync") then
+          vim.api.nvim_del_autocmd(autocmd.id)
+        end
+      end
+    end, 100)  -- Wait 100ms after startup
   end,
 })
